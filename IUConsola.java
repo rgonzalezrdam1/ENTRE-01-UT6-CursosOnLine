@@ -1,13 +1,12 @@
-/**
- * Interfaz de texto
- *  
- */
 import java.util.Scanner;
 import java.util.TreeSet;
+/**
+ * Interfaz de texto
+ *  Ruben Gonzalez Rivera
+ */
 
 public class IUConsola
 {
-
     private static final int MOSTRAR_CURSOS = 1;
     private static final int CURSOS_EN_CATEGORIA = 2;
     private static final int BORRAR_CURSOS = 3;

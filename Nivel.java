@@ -1,3 +1,3 @@
-public enum Nivel {
+public enum Nivel{
 	PRINCIPIANTE, INTERMEDIO, AVANZADO;
 }
