@@ -18,11 +18,9 @@ public class Curso
      * Constructor  
      */
     public Curso(String nombre, LocalDate fecha, Nivel nivel) {
-
         this.nombre = capitalizarNombre(nombre);
         this.fecha = fecha;
         this.nivel = nivel;
-
     }
 
     /**
@@ -47,7 +45,6 @@ public class Curso
      *  accesor para el nombre
      */
     public String getNombre() {
-
         return this.nombre;
     }
 
@@ -81,12 +78,10 @@ public class Curso
      *  Representación textual del curso
      */
     public String toString() {
-        String str = String.format("%20s: %s\n", "Nombre", this.nombre);
-        str += String.format("%20s: %s\n%20s: %s\n", "Publicado desde",
-            this.getFechaFormateada(),
-            "Nivel", this.nivel.toString());
-
-        str += "\n";
+        String str = String.format("\n %20s: %s\n", "Nombre", this.nombre);
+        str += String.format("%20s: %s\n", "Publicado desde",
+                                this.getFechaFormateada());
+        str += String.format("%20s: %s\n", "Nivel", this.nivel.toString());
         return str;
     }
 

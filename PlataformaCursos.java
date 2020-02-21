@@ -67,18 +67,28 @@ public class PlataformaCursos
         return -1;
     }
 
-    // /**
-     // * Representación textual de la plataforma (el map), cada categoría
-     // * junto con el nº total de cursos que hay en ella y a continuación
-     // * la relación de cursos en esa categoría (ver resultados de ejecución)
-     // * 
-     // * De forma eficiente ya que habrá muchas concatenaciones
-     // * 
-     // * Usar el conjunto de entradas y un iterador
-     // */
-    // public String toString(){
-        // return "";
-    // }
+    /**
+     * Representación textual de la plataforma (el map), cada categoría
+     * junto con el nº total de cursos que hay en ella y a continuación
+     * la relación de cursos en esa categoría (ver resultados de ejecución)
+     * 
+     * De forma eficiente ya que habrá muchas concatenaciones
+     * 
+     * Usar el conjunto de entradas y un iterador
+     */
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        Set<Map.Entry<String, ArrayList<Curso>>> entradas = plataforma.entrySet();
+        Iterator<Map.Entry<String, ArrayList<Curso>>> it = entradas.iterator();
+        sb.append("Cursos on line ofrecidos por la plataforma\n\n");
+        while(it.hasNext()){
+            Map.Entry<String, ArrayList<Curso>> aux = it.next();
+            String clave = aux.getKey();
+            sb.append(clave  + plataforma.get(clave).toString());
+            sb.append("---------------------------------------\n");
+        }
+        return sb.toString();
+    }
 
     /**
      * Mostrar la plataforma
@@ -105,20 +115,24 @@ public class PlataformaCursos
         }
     }
 
-    // /**
-     // *  Dado un String con los datos de un curso
-     // *  obtiene y devuelve un objeto Curso
-     // *
-     // *  Ej. a partir de  "sql essential training: 3/12/2019 : principiante " 
-     // *  obtiene el objeto Curso correspondiente
-     // *  
-     // *  Asumimos todos los valores correctos aunque puede haber 
-     // *  espacios antes y después de cada dato
-     // */
-    // private Curso obtenerCurso(String lineaCurso) {
-
-        // return null;
-    // }
+    /**
+     *  Dado un String con los datos de un curso
+     *  obtiene y devuelve un objeto Curso
+     *
+     *  Ej. a partir de  "sql essential training: 3/12/2019 : principiante " 
+     *  obtiene el objeto Curso correspondiente
+     *  
+     *  Asumimos todos los valores correctos aunque puede haber 
+     *  espacios antes y después de cada dato
+     */
+    private Curso obtenerCurso(String lineaCurso){
+        String[] str = lineaCurso.trim().split(SEPARADOR);
+        LocalDate fecha = LocalDate.parse(str[1].trim(), 
+                DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        Curso curso = new Curso(str[0], fecha, 
+                Nivel.valueOf(str[2].toUpperCase().trim()));
+        return curso;
+    }
 
     /**
      * devuelve un nuevo conjunto con los nombres de todas las categorías  
@@ -133,28 +147,49 @@ public class PlataformaCursos
         return categorias;
     }
 
-    // /**
-     // * borra de la plataforma los cursos de la categoría y nivel indicados
-     // * Se devuelve un conjunto (importa el orden) con los nombres de los cursos borrados 
-     // * 
-     // * Asumimos que existe la categoría
-     // *  
-     // */
+    /**
+     * borra de la plataforma los cursos de la categoría y nivel indicados
+     * Se devuelve un conjunto (importa el orden) con los nombres de los cursos borrados 
+     * 
+     * Asumimos que existe la categoría
+     *  
+     */
 
-    // public      borrarCursosDe(String categoria, Nivel nivel) {
+    public TreeSet<String> borrarCursosDe(String categoria, Nivel nivel){
+        categoria = categoria.toUpperCase();
+        TreeSet<String> borrado = new TreeSet<>();
+        ArrayList<Curso> cursosCategoria = plataforma.get(categoria);
+        Iterator<Curso> it = cursosCategoria.iterator();
+        while(it.hasNext()){
+            Curso cur = it.next();
+            if(nivel.equals(cur.getNivel())){
+                borrado.add(cur.getNombre());
+                it.remove();
+            }
+        }
+        return borrado;
+    }
 
-        // return null;
-    // }
+    /**
+     *   Devuelve el nombre del curso más antiguo en la
+     *   plataforma (el primero publicado)
+     */
 
-    // /**
-     // *   Devuelve el nombre del curso más antiguo en la
-     // *   plataforma (el primero publicado)
-     // */
-
-    // public String cursoMasAntiguo() {
-
-        // return "";
-    // }
+    public String cursoMasAntiguo() {
+        String cursoAntiguo = "";
+        LocalDate fechaAntigua = LocalDate.MAX;
+        Set<String> conjuntoCategorias = plataforma.keySet();
+        for(String categoria: conjuntoCategorias){
+            ArrayList<Curso> cursos = plataforma.get(categoria);
+            for(Curso curso: cursos){
+                if(curso.getFecha().compareTo(fechaAntigua) < 0){
+                    fechaAntigua = curso.getFecha();
+                    cursoAntiguo = curso.getNombre();
+                }
+            }
+        }
+        return cursoAntiguo;
+    }
 
     /**
      *  

@@ -20,11 +20,9 @@ public class IUConsola
      * Constructor de la clase IUConsola
      */
     public IUConsola() {
-
         teclado = new Scanner(System.in);
         plataforma = new PlataformaCursos();
         plataforma.leerDeFichero();
-
     }
 
     /**
@@ -32,7 +30,6 @@ public class IUConsola
      *  
      */
     public void iniciar() {
-
         int opcion = menu();
         while (opcion != SALIR) {
             switch (opcion) {
@@ -54,7 +51,6 @@ public class IUConsola
             opcion = menu();
         }
         salir();
-
     }
 
     /**
@@ -62,7 +58,6 @@ public class IUConsola
      * @return  la opción seleccionada
      */
     private int menu() {
-
         borrarPantalla();
         System.out.println("*****************************************");
         System.out.println("   Cursos en la plataforma online ");
@@ -86,8 +81,7 @@ public class IUConsola
      *  Devuelve true si la opción es correcta, false en otro caso
      *
      */
-    private boolean opcionValida(int opcion) {
-
+    private boolean opcionValida(int opcion){
         return opcion >= MOSTRAR_CURSOS && opcion <= SALIR;
     }
 
@@ -95,7 +89,6 @@ public class IUConsola
      * Muestra los cursos en la plataforma
      */
     private void mostrarCursoss() {
-
         borrarPantalla();
         plataforma.escribir();
     }
@@ -104,7 +97,6 @@ public class IUConsola
      * Muestra el total de cursos de una  categoría previamente introducida por teclado
      */
     private void cursosEnCategoria() {
-
         System.out.print("Introduzca categoría: ");
         String categoria = teclado.nextLine().trim();
         int total = plataforma.totalCursosEn(categoria);
@@ -115,7 +107,6 @@ public class IUConsola
             System.out.println("Hay " + total +
                 " curso/s de  " + categoria.toUpperCase());
         }
-
     }
 
     /**
@@ -123,7 +114,6 @@ public class IUConsola
      *
      */
     private boolean categoriaNoValida(String categoria) {
-
         return !(plataforma.obtenerCategorias())
         .contains(categoria.toUpperCase());
     }
@@ -132,7 +122,6 @@ public class IUConsola
      * borra de la plataforma los cursos de categoria y nivel pedidos por teclado
      */
     private void borrarCursos() {
-
         System.out.print("Introduzca categoria: ");
         String categoria = teclado.nextLine().trim();
         while (categoriaNoValida(categoria)) {
@@ -160,7 +149,6 @@ public class IUConsola
      *
      */
     private boolean noCorrectoNivel(int n) {
-
         return n < Nivel.PRINCIPIANTE.ordinal() || 
         n > Nivel.AVANZADO.ordinal();
     }
@@ -169,7 +157,6 @@ public class IUConsola
      * muestra el curso más antiguo en la plataforma
      */
     private void cursoMasAntiguo() {
-
         System.out.print("El curso más antiguo es ");
         System.out.println(plataforma.cursoMasAntiguo());
     }
@@ -178,7 +165,6 @@ public class IUConsola
      * Borrar la pantalla
      */
     private void borrarPantalla() {
-
         System.out.println("\u000C");
     }
 
@@ -186,7 +172,6 @@ public class IUConsola
      * Hacer una pausa
      */
     private void pausa() {
-
         System.out.println("Pulse <Intro> para continuar");
         teclado.nextLine();
     }
@@ -195,7 +180,6 @@ public class IUConsola
      * salir de la aplicación
      */
     private void salir() {
-
         System.out.println("\n----- Finalizada la aplicación  ------\n");
     }
 }
